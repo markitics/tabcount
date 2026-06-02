@@ -6,9 +6,9 @@ let counter = ChromeCounter()
 let cli = CommandLineInterface(counter: counter, store: store)
 
 switch cli.run(arguments: CommandLine.arguments) {
-case .runApp:
+case let .runApp(launchHidden):
     let app = NSApplication.shared
-    let delegate = MenuBarApp()
+    let delegate = MenuBarApp(launchHidden: launchHidden)
     app.delegate = delegate
     app.run()
 case let .exit(code):

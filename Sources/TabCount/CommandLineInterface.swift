@@ -2,7 +2,7 @@ import Foundation
 import TabCountCore
 
 enum CommandLineResult {
-    case runApp
+    case runApp(launchHidden: Bool)
     case exit(Int32)
 }
 
@@ -15,7 +15,9 @@ struct CommandLineInterface {
 
         switch command {
         case nil:
-            return .runApp
+            return .runApp(launchHidden: false)
+        case "--hidden":
+            return .runApp(launchHidden: true)
         case "sample":
             return sample()
         case "print":
@@ -83,6 +85,7 @@ struct CommandLineInterface {
             """
             Usage:
               tabcount          Run the macOS menu bar app.
+              tabcount --hidden Run the app with its menu bar item hidden.
               tabcount sample   Count Chrome windows/tabs and append to the app history file.
               tabcount print    Print the current Chrome windows/tabs without writing history.
               tabcount import-counttabs [csv_path]

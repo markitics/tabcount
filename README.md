@@ -58,6 +58,12 @@ Install the menu bar app bundle:
 
 The installer builds a small `.app` bundle at `~/Applications/TabCount.app`. The menu bar app records a fresh sample every five minutes while it is running.
 
+Install and start it hidden:
+
+```sh
+./scripts/install-menu-bar-agent.sh --hidden
+```
+
 Open the installed app:
 
 ```sh

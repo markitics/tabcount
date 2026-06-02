@@ -5,6 +5,7 @@ final class MenuBarApp: NSObject, NSApplicationDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let counter = ChromeCounter()
     private let store = HistoryStore()
+    private let launchHidden: Bool
 
     private let summaryItem = NSMenuItem()
     private let refreshedItem = NSMenuItem()
@@ -23,10 +24,18 @@ final class MenuBarApp: NSObject, NSApplicationDelegate {
     private var chartRange = ChartRange.daySoFar
     private var availableChartRanges: [ChartRange] = [.daySoFar, .last24Hours, .last7Days]
 
+    init(launchHidden: Bool = false) {
+        self.launchHidden = launchHidden
+        super.init()
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         configureMenu()
         refreshNow()
+        if launchHidden {
+            hideFromMenuBar()
+        }
 
         refreshTimer = Timer.scheduledTimer(
             timeInterval: 300,
